@@ -29,8 +29,6 @@ async def startup_event():
 		def __call__(self, request):
 			return self.nlp_model(request._data, max_length=50)
 
-
-  if use_gpu: num_rep = torch.cuda.device_count()
 	backend_config = serve.BackendConfig(num_replicas=num_rep)
 	client.create_backend("gpt-2", GPT2, args, config=backend_config)
 	client.create_endpoint("generate", backend="gpt-2")
