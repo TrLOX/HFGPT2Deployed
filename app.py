@@ -23,7 +23,7 @@ async def startup_event():
 
 		def __call__(self, request):
 			return self.nlp_model(request._data, max_length=50)
-      
+
   args=argparse.Namespace()
   use_gpu = torch.cuda.is_available()
   args.device = torch.device("cuda" if use_gpu else "cpu")
