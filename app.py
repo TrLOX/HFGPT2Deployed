@@ -9,8 +9,12 @@ from fastapi import FastAPI
 from transformers import pipeline
 
 
-
+app = FastAPI()
 serve_handle = None
+args=argparse.Namespace()
+use_gpu = torch.cuda.is_available()
+args.device = torch.device("cuda" if use_gpu else "cpu")
+num_rep = cpu_count()
 
 @app.on_event("startup")
 async def startup_event():
@@ -24,10 +28,7 @@ async def startup_event():
 		def __call__(self, request):
 			return self.nlp_model(request._data, max_length=50)
 
-  args=argparse.Namespace()
-  use_gpu = torch.cuda.is_available()
-  args.device = torch.device("cuda" if use_gpu else "cpu")
-  num_rep = cpu_count()
+
   if use_gpu: num_rep = torch.cuda.device_count()
 	backend_config = serve.BackendConfig(num_replicas=num_rep)
 	client.create_backend("gpt-2", GPT2, args, config=backend_config)
