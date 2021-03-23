@@ -15,6 +15,7 @@ args=argparse.Namespace()
 use_gpu = torch.cuda.is_available()
 args.device = torch.device("cuda" if use_gpu else "cpu")
 num_rep = cpu_count()
+if use_gpu: num_rep = torch.cuda.device_count()
 
 @app.on_event("startup")
 async def startup_event():
