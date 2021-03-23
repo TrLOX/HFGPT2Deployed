@@ -12,7 +12,8 @@ from transformers import pipeline
 app = FastAPI()
 serve_handle = None
 args=argparse.Namespace()
-use_gpu = torch.cuda.is_available()
+#use_gpu = torch.cuda.is_available()
+use_gpu = false
 args.device = torch.device("cuda" if use_gpu else "cpu")
 num_rep = cpu_count()
 if use_gpu: num_rep = torch.cuda.device_count()
