@@ -1,3 +1,4 @@
+import ray
 from ray import serve
 
 from fastapi import FastAPI
