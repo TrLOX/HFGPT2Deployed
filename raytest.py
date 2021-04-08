@@ -24,8 +24,8 @@ async def startup_event():
             return self.nlp_model(await request.body(), max_length=50)
 
     # Set up a Ray Serve backend with the desired number of replicas.
-    backend_config = serve.BackendConfig(num_replicas=2)
-    serve.create_backend("gpt-2", GPT2, config=backend_config)
+    backend_config = serve.BackendConfig(num_replicas=1)
+    serve.create_backend("gpt-2", GPT2, config=backend_config,ray_actor_options={"num_gpus": 1})
     serve.create_endpoint("generate", backend="gpt-2")
 
     # Get a handle to our Ray Serve endpoint so we can query it in Python.
