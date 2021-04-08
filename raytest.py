@@ -17,6 +17,7 @@ async def startup_event():
     # Define a callable class to use for our Ray Serve backend.
     class GPT2:
         def __init__(self):
+            print("This actor is allowed to use GPUs {}.".format(ray.get_gpu_ids()))
             self.nlp_model = pipeline("text-generation", model="gpt2",device=0)
 
         async def __call__(self, request):
