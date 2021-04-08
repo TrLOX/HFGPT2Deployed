@@ -17,7 +17,7 @@ async def startup_event():
     # Define a callable class to use for our Ray Serve backend.
     class GPT2:
         def __init__(self):
-            self.nlp_model = pipeline("text-generation", model="gpt2")
+            self.nlp_model = pipeline("text-generation", model="gpt2",device=0)
 
         async def __call__(self, request):
             return self.nlp_model(await request.body(), max_length=50)
