@@ -21,7 +21,8 @@ async def startup_event():
             self.nlp_model = pipeline("text-generation", model="gpt2m",device=0)
 
         async def __call__(self, request):
-            return self.nlp_model(await request.body(), max_length=50)
+            return self.nlp_model(await request.body(),max_length=1000, early_stopping=True, top_p=.90, top_k=50 , do_sample=True , num_beams=6, 
+    no_repeat_ngram_size=2)
 
     # Set up a Ray Serve backend with the desired number of replicas.
     backend_config = serve.BackendConfig(num_replicas=1)
