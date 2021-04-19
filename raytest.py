@@ -18,7 +18,7 @@ async def startup_event():
     class GPT2:
         def __init__(self):
             print("This actor is allowed to use GPUs {}.".format(ray.get_gpu_ids()))
-            self.nlp_model = pipeline("text-generation", model="gpt2m",device=0)
+            self.nlp_model = pipeline("text-generation", model="QianWeiTech/GPT2-News",device=0)
 
         async def __call__(self, request):
             return self.nlp_model(await request.body(),max_length=1000, early_stopping=True, top_p=.90, top_k=50 , do_sample=True , no_repeat_ngram_size=3)
